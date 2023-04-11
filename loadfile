@@ -1,0 +1,24 @@
+package com.mazakindia.pmcmonitor.config;
+
+import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+@Configuration
+public class AppConfig {
+    private static final Properties PROPERTIES = new Properties();
+
+    static {
+        try (InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream("application.properties")) {
+            PROPERTIES.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load application properties", e);
+        }
+    }
+
+    public static String getProperty(String key) {
+        return PROPERTIES.getProperty(key);
+    }
+}
